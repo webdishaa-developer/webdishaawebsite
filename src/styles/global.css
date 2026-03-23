@@ -1,0 +1,166 @@
+/* ─────────────────────────────────────────────────
+   WebDisha — Global Styles
+   Performance-first: CSS-only stars, GPU compositing
+   ───────────────────────────────────────────────── */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black:  #000000;
+  --deep:   #03080f;
+  --blue:   #1d6ff2;
+  --cyan:   #00c8ff;
+  --white:  #eef4ff;
+  --muted:  #6a7d94;
+  --dim:    #2a3a4e;
+  --orange: #ff6b35;
+  --gold:   #ffb830;
+  --green:  #00e887;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── STARS (CSS only, zero JS) ── */
+.stars { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.stars::before, .stars::after {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    radial-gradient(1px 1px at  8% 12%, rgba(180,210,255,.7) 0%,transparent 100%),
+    radial-gradient(1px 1px at 22% 38%, rgba(180,210,255,.5) 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 38%  7%, rgba(180,210,255,.8) 0%,transparent 100%),
+    radial-gradient(1px 1px at 54% 58%, rgba(180,210,255,.4) 0%,transparent 100%),
+    radial-gradient(1px 1px at 68% 23%, rgba(180,210,255,.6) 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 79% 73%, rgba(180,210,255,.7) 0%,transparent 100%),
+    radial-gradient(1px 1px at 91%  9%, rgba(180,210,255,.5) 0%,transparent 100%),
+    radial-gradient(1px 1px at 14% 68%, rgba(180,210,255,.4) 0%,transparent 100%),
+    radial-gradient(1px 1px at 44% 88%, rgba(180,210,255,.6) 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 59% 43%, rgba(180,210,255,.5) 0%,transparent 100%),
+    radial-gradient(1px 1px at 31% 54%, rgba(180,210,255,.4) 0%,transparent 100%),
+    radial-gradient(1px 1px at 74% 53%, rgba(180,210,255,.6) 0%,transparent 100%),
+    radial-gradient(1px 1px at 19% 19%, rgba(180,210,255,.5) 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 63% 83%, rgba(180,210,255,.7) 0%,transparent 100%),
+    radial-gradient(1px 1px at 84% 28%, rgba(180,210,255,.5) 0%,transparent 100%);
+  animation: twinkle 7s ease-in-out infinite alternate;
+}
+.stars::after {
+  background-image:
+    radial-gradient(1px 1px at 17% 33%, rgba(180,210,255,.6) 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 41% 61%, rgba(180,210,255,.8) 0%,transparent 100%),
+    radial-gradient(1px 1px at 66% 17%, rgba(180,210,255,.5) 0%,transparent 100%),
+    radial-gradient(1px 1px at 82% 49%, rgba(180,210,255,.4) 0%,transparent 100%),
+    radial-gradient(1px 1px at  6% 86%, rgba(180,210,255,.6) 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 27% 71%, rgba(180,210,255,.7) 0%,transparent 100%),
+    radial-gradient(1px 1px at 52% 14%, rgba(180,210,255,.4) 0%,transparent 100%),
+    radial-gradient(1px 1px at 11% 47%, rgba(180,210,255,.5) 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 57% 69%, rgba(180,210,255,.7) 0%,transparent 100%),
+    radial-gradient(1px 1px at 36% 27%, rgba(180,210,255,.4) 0%,transparent 100%),
+    radial-gradient(1px 1px at 71% 41%, rgba(180,210,255,.5) 0%,transparent 100%),
+    radial-gradient(1px 1px at 94% 88%, rgba(180,210,255,.4) 0%,transparent 100%);
+  animation-delay: -3.5s;
+}
+@keyframes twinkle { 0%{opacity:.55} 100%{opacity:1} }
+
+.ambient {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 50% at 10% 15%, rgba(29,111,242,.11) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 40% at 88% 82%, rgba(0,200,255,.07) 0%,transparent 60%);
+}
+
+/* ── SCROLL PROGRESS ── */
+.progress-bar {
+  position: fixed; top: 0; left: 0; height: 2px; z-index: 9997;
+  background: linear-gradient(90deg, var(--blue), var(--cyan));
+  width: 0%; will-change: width; transition: none;
+}
+
+/* ── WHATSAPP FLOAT ── */
+.wa-float {
+  position: fixed; bottom: 20px; right: 20px; z-index: 9000;
+  width: 54px; height: 54px; border-radius: 50%;
+  background: #25d366; display: flex; align-items: center; justify-content: center;
+  text-decoration: none; font-size: 26px;
+  box-shadow: 0 4px 20px rgba(37,211,102,.4);
+  transition: transform .25s, box-shadow .25s;
+}
+.wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 32px rgba(37,211,102,.6); }
+.wa-pulse {
+  position: absolute; inset: -4px; border-radius: 50%;
+  border: 2px solid rgba(37,211,102,.5);
+  animation: waPulse 2s ease-out infinite;
+}
+@keyframes waPulse { 0%{transform:scale(1);opacity:.8} 100%{transform:scale(1.65);opacity:0} }
+
+/* ── SCROLL REVEAL ── */
+.rev { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+.rev.in { opacity: 1; transform: none; }
+.d1{transition-delay:.07s} .d2{transition-delay:.14s} .d3{transition-delay:.21s} .d4{transition-delay:.28s}
+
+/* ── SHARED SECTION ── */
+.s-wrap { position: relative; z-index: 1; }
+.s-inner { max-width: 1200px; margin: 0 auto; padding: 80px 5%; }
+.s-eyebrow {
+  font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--cyan); display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+}
+.s-eyebrow::before { content: ''; width: 22px; height: 1px; background: var(--cyan); }
+.s-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(36px, 6vw, 72px); line-height: .95; letter-spacing: .02em; margin-bottom: 16px;
+}
+.s-title em { font-style: normal; color: var(--cyan); }
+.s-body { font-size: 14px; font-weight: 300; line-height: 1.8; color: var(--muted); max-width: 480px; margin-bottom: 44px; }
+.hr { border: none; height: 1px; background: rgba(255,255,255,.05); }
+
+/* ── MARQUEE ── */
+.marquee-wrap {
+  position: relative; z-index: 1;
+  border-top: 1px solid rgba(255,255,255,.05);
+  border-bottom: 1px solid rgba(255,255,255,.05);
+  background: rgba(0,200,255,.03); padding: 13px 0; overflow: hidden;
+}
+.marquee-track { display: flex; animation: marqueeScroll 30s linear infinite; will-change: transform; }
+.marquee-track:hover { animation-play-state: paused; }
+.marquee-group { display: flex; flex-shrink: 0; }
+.marquee-item {
+  display: inline-flex; align-items: center; gap: 10px; padding: 0 28px;
+  font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted); white-space: nowrap;
+}
+.marquee-dot { color: var(--cyan); font-size: 14px; }
+@keyframes marqueeScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
+@keyframes expandBar { to{width:68px} }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+@keyframes waSpin { to{transform:rotate(360deg)} }
+@keyframes sphereFloat {
+  0%,100%{transform:translateY(-50%) translateY(0)}
+  50%{transform:translateY(-50%) translateY(-16px)}
+}
+
+/* ════════════════════════════════
+   MOBILE RESPONSIVE BREAKPOINTS
+════════════════════════════════ */
+@media (max-width:1024px) {
+  .s-inner { padding: 70px 5%; }
+}
+@media (max-width:768px) {
+  .s-inner { padding: 60px 5%; }
+  .s-title { font-size: clamp(34px,9vw,56px); }
+  .wa-float { bottom: 16px; right: 16px; width: 50px; height: 50px; font-size: 24px; }
+}
+@media (max-width:480px) {
+  .s-inner { padding: 50px 5%; }
+  .s-title { font-size: clamp(30px,10vw,48px); }
+  .s-body { font-size: 13.5px; }
+  .marquee-item { font-size: 10px; padding: 0 18px; }
+}
