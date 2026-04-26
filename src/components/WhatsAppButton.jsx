@@ -1,4 +1,5 @@
 import { SITE } from '../data';
+import { FaWhatsapp } from "react-icons/fa";
 
 const styles = `
 .wa-float {
@@ -54,7 +55,7 @@ export default function WhatsAppButton() {
       >
         <div className="wa-pulse" />
         <span className="wa-tooltip">Chat with us!</span>
-        💬
+        <FaWhatsapp size={28} color="#fff" />
       </a>
     </>
   );
