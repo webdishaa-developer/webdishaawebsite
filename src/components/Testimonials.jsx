@@ -17,7 +17,7 @@ const styles = `
   color: rgba(0,200,255,.05); pointer-events: none;
 }
 .testi-stars { color: #ffb830; font-size: 13px; margin-bottom: 12px; letter-spacing: 2px; }
-.testi-text { font-size: 13.5px; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,.7); margin-bottom: 18px; }
+.testi-text { font-size: 1.1em; font-weight: 400; line-height: 1.8; color: rgba(255,255,255,.7); margin-bottom: 18px; }
 .testi-author { display: flex; align-items: center; gap: 12px; }
 .testi-avatar {
   width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;

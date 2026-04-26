@@ -116,7 +116,13 @@ body {
   font-size: clamp(36px, 6vw, 72px); line-height: .95; letter-spacing: .02em; margin-bottom: 16px;
 }
 .s-title em { font-style: normal; color: var(--cyan); }
-.s-body { font-size: 14px; font-weight: 300; line-height: 1.8; color: var(--muted); max-width: 480px; margin-bottom: 44px; }
+.s-body { 
+     font-size: 1em;
+    font-weight: 400;
+    line-height: 1.8;
+    color: white;
+    max-width: 480px;
+    margin-bottom: 44px; }
 .hr { border: none; height: 1px; background: rgba(255,255,255,.05); }
 
 /* ── MARQUEE ── */

@@ -84,6 +84,8 @@ const NAV_LINKS = [
   ['portfolio',    'Portfolio'],
   ['testimonials', 'Reviews'],
   ['contact',      'Contact'],
+  ['social',      'Social Media'],
+
 ];
 
 export default function Navbar({ solid }) {

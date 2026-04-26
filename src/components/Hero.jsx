@@ -130,8 +130,12 @@ const styles = `
   margin-left: 2px; vertical-align: middle; animation: blink .75s step-end infinite;
 }
 .hero-sub {
-  font-size: clamp(14px,1.8vw,15px); font-weight: 300; line-height: 1.85;
-  color: #6a7d94; max-width: 420px; margin-bottom: 36px;
+     font-size: 1.5em;
+    font-weight: 500; 
+   line-height: 1.85;
+  color: white; 
+  max-width: 420px;
+   margin-bottom: 36px;
   animation: fadeUp .95s ease both;
 }
 .hero-btns {
