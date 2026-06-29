@@ -21,6 +21,7 @@ import WhyUs          from './components/WhyUs';
 import Contact        from './components/Contact';
 import Footer         from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
+import Loader from './components/Loader'; 
 
 export default function App() {
   // rAF-throttled scroll — updates nav solid state + progress bar
@@ -31,6 +32,7 @@ export default function App() {
 
   return (
     <div>
+        <Loader />  
       {/* ── BACKGROUND LAYERS ── */}
       <div className="stars" />
       <div className="ambient" />
