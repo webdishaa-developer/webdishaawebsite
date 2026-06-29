@@ -165,9 +165,9 @@ export const SERVICES = [
 // ─────────────────────────────────────────
 
 export const SOCIAL_PACKS = [
-  { tier: "Starter", name: "Starter Social Pack", price: "₹999", posts: 5 },
-  { tier: "Business", name: "Business Social Pack", price: "₹2,099", posts: 10 },
-  { tier: "Premium", name: "Premium Social Pack", price: "₹3,499", posts: 20 },
+  { tier: "Starter", name: "Starter Social Pack", price: "₹1,599", posts: 5 },
+  { tier: "Business", name: "Business Social Pack", price: "₹2,999", posts: 10 },
+  { tier: "Premium", name: "Premium Social Pack", price: "₹4,999", posts: 20 },
 ];
 
 // ─────────────────────────────────────────
