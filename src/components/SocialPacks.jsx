@@ -240,10 +240,11 @@ function SocialCard({ pack, index }) {
           border: '1px solid rgba(0,200,255,.15)',
           borderRadius: '100px',
           padding: '4px 9px',
-          fontSize: '8px',
-          fontWeight: '700',
+          fontSize: '10px',
+          fontWeight: '200',
           letterSpacing: '.05em',
           marginBottom: '8px',
+            fontFamily: 'sans-serif',
         }}
       >
         {pack.management}
