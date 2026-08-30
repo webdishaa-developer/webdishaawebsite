@@ -84,8 +84,8 @@ export const PACKAGES = [
   {
     num: "01",
     name: "Starter Website",
-    price: "₹4,999",
-    delivery: "2–3 Days",
+    price: "₹5,999",
+    delivery: "2–4 Days",
     hot: false,
     features: [
       "1 Page Website",
@@ -99,7 +99,7 @@ export const PACKAGES = [
   {
     num: "02",
     name: "Business Website",
-    price: "₹9,999",
+    price: "₹14,999",
     delivery: "4–5 Days",
     hot: true,
     features: [
@@ -113,13 +113,31 @@ export const PACKAGES = [
     ],
   },
   {
-    num: "03",
+  num: "03",
+  name: "Custom Web App",
+  price: "Starting ₹19,999",
+  delivery: "7–14 Days",
+  hot: true,
+  features: [
+    "Turn Your Idea Into a Web App",
+    "Custom Design — No Templates",
+    "Works Perfectly on Mobile & Desktop",
+    "User Login & Secure Authentication",
+    "Custom Features & Business Logic",
+    "Admin Dashboard",
+    "API & Database Integration",
+    "Live Deployment & Support",
+  ],
+},
+
+  {
+    num: "04",
     name: "Professional Website",
-    price: "₹19,999",
+    price: "₹24,999",
     delivery: "7–10 Days",
     hot: false,
     features: [
-      "8–10 Pages",
+      "6–8 Pages",
       "Modern UI Design",
       "Blog Section",
       "Speed Optimization",
@@ -130,15 +148,14 @@ export const PACKAGES = [
   {
     num: "04",
     name: "E-Commerce Website",
-    price: "₹34,999",
+    price: "₹44,999",
     delivery: "10–14 Days",
     hot: false,
     features: [
       "Online Store",
       "Product Pages",
       "Shopping Cart",
-      "Payment Gateway",
-      "Order Management",
+      "Order Management Panel",
       "Admin Dashboard (20 Products)",
     ],
   },
@@ -165,10 +182,144 @@ export const SERVICES = [
 // ─────────────────────────────────────────
 
 export const SOCIAL_PACKS = [
-  { tier: "Starter", name: "Starter Social Pack", price: "₹1,599", posts: 5 },
-  { tier: "Business", name: "Business Social Pack", price: "₹2,999", posts: 10 },
-  { tier: "Premium", name: "Premium Social Pack", price: "₹4,999", posts: 20 },
+  // 1 MONTH PLANS
+  {
+    duration: "1 Month",
+    tier: "Elevate Pack",
+    name: "Elevate Pack",
+    price: "₹3,500",
+    posts: 8,
+    reels: 2,
+    photos: 6,
+    management: "+ ₹500 Management Charges",
+    features: [
+      "Complete Graphic Designing",
+      "Content Planning",
+      "Social Media Management",
+    ],
+  },
+
+  {
+    duration: "1 Month",
+    tier: "Value Pack",
+    name: "Value Pack",
+    price: "₹6,000",
+    posts: 5,
+    reels: 3,
+    photos: 5,
+    management: "+ ₹500 Management Charges",
+    badge: "Best Value",
+    reelDetails: [
+      "2 Real Reels",
+      "1 Graphic Reel",
+    ],
+    postDetails: [
+      "2 Real Photos",
+      "3 Graphic Posts",
+    ],
+  },
+
+  {
+    duration: "1 Month",
+    tier: "Premium Pack",
+    name: "Premium Pack",
+    price: "₹15,000",
+    posts: 15,
+    reels: 10,
+    photos: 15,
+    management: "NO MANAGEMENT CHARGES",
+    reelDetails: [
+      "6 Model Reels",
+      "4 Real / Business Reels",
+    ],
+    postDetails: [
+      "10 Real / Business Photos",
+      "5 Graphic Posts",
+    ],
+    features: [
+      "Premium Content Creation",
+      "Reels Editing",
+      "Graphic Designing",
+      "Social Media Management",
+    ],
+  },
+
+  // 3 MONTH PLANS
+  {
+    duration: "3 Month",
+    tier: "Growth Pack",
+    name: "Growth Pack",
+    price: "₹8,000",
+    posts: 8,
+    reels: 4,
+    photos: 8,
+    management: "NO MANAGEMENT CHARGES",
+    reelDetails: [
+      "2 Real Reels",
+      "2 Graphic Reels",
+    ],
+    postDetails: [
+      "4 Real Photos",
+      "4 Graphic Posts",
+    ],
+  },
+
+  {
+    duration: "3 Month",
+    tier: "Signature Pack",
+    name: "Signature Pack",
+    price: "₹13,000",
+    posts: 12,
+    reels: 8,
+    photos: 12,
+    management: "NO MANAGEMENT CHARGES",
+    reelDetails: [
+      "1 Model Reel",
+      "4 Real / Business Reels",
+      "3 Graphic Reels",
+    ],
+    postDetails: [
+      "Real / Business Posts",
+      "Premium / Graphic Posts",
+    ],
+    features: [
+      "Content Planning",
+      "Reels Editing",
+      "Graphic Designing",
+      "Social Media Management",
+    ],
+  },
+
+  {
+    duration: "3 Month",
+    tier: "Model Spotlight",
+    name: "Model Spotlight",
+    price: "₹5,000",
+    posts: 3,
+    reels: 1,
+    stories: 2,
+    management: "NO MANAGEMENT CHARGES",
+    modelPackage: "Complete Model Content Package",
+    reelDetails: [
+      "1 Professional Model Reel",
+    ],
+    postDetails: [
+      "3 Professional Photos",
+    ],
+    storyDetails: [
+      "2 Stories",
+    ],
+    perfectFor: [
+      "Fashion",
+      "Boutique",
+      "Beauty",
+      "Jewellery",
+      "Lifestyle",
+      "Product Promotion",
+    ],
+  },
 ];
+
 
 // ─────────────────────────────────────────
 // PROCESS

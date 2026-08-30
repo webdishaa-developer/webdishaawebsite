@@ -187,7 +187,7 @@ export default function Packages() {
       <div className="s-wrap" id="packages">
         <div className="s-inner">
           <div className="rev">
-            <div className="s-eyebrow">Website Packages</div>
+            <div className="s-eyebrow">Website and custome web app Packages</div>
             <h2 className="s-title">Choose Your <em>Plan</em></h2>
             <p className="s-body">
               From a landing page to a full e-commerce store — for every budget and goal.
