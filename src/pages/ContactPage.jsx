@@ -1,8 +1,11 @@
 // ─────────────────────────────────────────────────────
 //  ContactPage.jsx — Full Contact Page
-//  Form submission: FormSubmit.co  ->  emails go to webdishaa@gmail.com
-//  (free, no account or backend). First submission triggers ONE activation
-//  email to that inbox — click "Activate Form" once, then it works forever.
+//  Form delivery (two independent channels, no duplicates):
+//   1) Netlify Forms  – posts to your own domain (no CORS, no 3rd party).
+//                       Emails come from Netlify → set up in Netlify dashboard.
+//   2) FormSubmit.co  – automatic backup if (1) fails (also used on localhost)
+//   3) WhatsApp link  – shown to the visitor if both fail
+//  REQUIRES the hidden <form name="contact"> in public/index.html (see notes).
 // ─────────────────────────────────────────────────────
 
 import { useState } from 'react';
@@ -16,7 +19,16 @@ import { WA_NUMBER } from '../utils/whatsapp';
 
 // Where enquiries are delivered
 const CONTACT_EMAIL = 'webdishaa@gmail.com';
-const FORM_ENDPOINT = `https://formsubmit.co/ajax/${CONTACT_EMAIL}`;
+const FORM_ENDPOINT = `https://formsubmit.co/ajax/${CONTACT_EMAIL}`; // backup channel
+const NETLIFY_FORM  = 'contact';                                     // must match public/index.html
+
+// fetch that gives up instead of hanging for 20s when a service is down
+const fetchWithTimeout = async (url, options, ms) => {
+  const ctrl  = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), ms);
+  try   { return await fetch(url, { ...options, signal: ctrl.signal }); }
+  finally { clearTimeout(timer); }
+};
 
 const styles = `
 /* ── CONTACT GRID ── */
@@ -45,7 +57,7 @@ const styles = `
 
 .info-title {
   font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.79); margin-bottom: 14px;
+  color: rgba(255,255,255,.35); margin-bottom: 14px;
 }
 
 .info-link {
@@ -66,7 +78,7 @@ const styles = `
 .info-link:hover .info-icon { background: rgba(0,200,255,.16); }
 .info-link-text { display: flex; flex-direction: column; gap: 1px; }
 .info-link-main { font-size: 13.5px; font-weight: 500; color: inherit; }
-.info-link-sub  { font-size: 11px; font-weight: 300; color: rgba(255, 255, 255, 0.91); }
+.info-link-sub  { font-size: 11px; font-weight: 300; color: rgba(255,255,255,.38); }
 
 /* Hours card */
 .hours-row {
@@ -216,41 +228,71 @@ export default function ContactPage() {
     if (!validate()) return;
     setStatus('loading');
 
-    const payload = {
-      // shown in the email you receive
-      Name:      form.name.trim(),
-      Phone:     form.phone.trim(),
-      Email:     form.email.trim() || 'Not provided',
-      Business:  form.business.trim() || 'Not provided',
-      Services:  chips.join(', ') || 'Not selected',
-      Budget:    form.budget || 'Not selected',
-      Message:   form.message.trim(),
-      // FormSubmit options
-      email:     form.email.trim() || undefined,   // becomes the Reply-To
-      _subject:  `New enquiry from ${form.name.trim()} — WebDishaa website`,
-      _template: 'table',
-      _captcha:  'false',
-      _honey:    '',
+    const name = form.name.trim();
+    const fields = {
+      name,
+      phone:    form.phone.trim(),
+      email:    form.email.trim(),
+      business: form.business.trim(),
+      services: chips.join(', '),
+      budget:   form.budget,
+      message:  form.message.trim(),
+    };
+
+    // ── Channel 1: Netlify Forms (same domain) ──
+    const viaNetlify = async () => {
+      const body = new URLSearchParams({
+        'form-name': NETLIFY_FORM,
+        subject: `New enquiry from ${name} — WebDishaa website`,
+        'bot-field': '',
+        ...fields,
+      }).toString();
+      const res = await fetchWithTimeout('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body,
+      }, 8000);
+      if (!res.ok) throw new Error(`Netlify Forms responded ${res.status}`);
+    };
+
+    // ── Channel 2: FormSubmit (backup) ──
+    const viaFormSubmit = async () => {
+      const res = await fetchWithTimeout(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          Name: name,
+          Phone: fields.phone,
+          Email: fields.email || 'Not provided',
+          Business: fields.business || 'Not provided',
+          Services: fields.services || 'Not selected',
+          Budget: fields.budget || 'Not selected',
+          Message: fields.message,
+          email: fields.email || undefined,           // Reply-To
+          _subject: `New enquiry from ${name} — WebDishaa website`,
+          _template: 'table',
+          _captcha: 'false',
+          _honey: '',
+        }),
+      }, 10000);
+      const data = await res.json().catch(() => ({}));
+      if (!(res.ok && (data.success === true || data.success === 'true'))) {
+        throw new Error(`FormSubmit said: ${JSON.stringify(data)}`);
+      }
     };
 
     try {
-      const res  = await fetch(FORM_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      const data = await res.json().catch(() => ({}));
-      const ok   = res.ok && (data.success === true || data.success === 'true');
-
-      if (ok) {
+      await viaNetlify();
+      setStatus('success');
+    } catch (err1) {
+      console.warn('Netlify Forms failed, trying backup:', err1.message);
+      try {
+        await viaFormSubmit();
         setStatus('success');
-      } else {
-        console.warn('FormSubmit response:', data); // e.g. "needs Activation" on the very first send
+      } catch (err2) {
+        console.warn('Backup failed too:', err2.message);
         setStatus('error');
       }
-    } catch (err) {
-      console.warn('Form send failed:', err);
-      setStatus('error');
     }
   };
 
@@ -349,6 +391,21 @@ export default function ContactPage() {
                 ))}
               </div>
 
+              {/* Map */}
+              <div className="map-wrap">
+                {/* Replace src with your Google Maps embed URL */}
+                {/* Go to maps.google.com → share → embed → copy src */}
+                <div className="map-placeholder">
+                  📍 Paste your Google Maps embed URL in ContactPage.jsx
+                  <br /><br />
+                  <small>maps.google.com → Share → Embed a map → Copy the iframe src</small>
+                </div>
+                {/* <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!..."
+                  allowFullScreen loading="lazy"
+                  title="WebDishaa Location"
+                /> */}
+              </div>
 
             </div>
 
