@@ -22,6 +22,7 @@ import AboutPage   from './pages/AboutPage';
 import ServicesPage from './pages/ServicesPage';
 import GalleryPage from './pages/GalleryPage';
 import ContactPage from './pages/ContactPage';
+import Chatbot from './components/Chatbot';
 
 /* ── Scroll to top on every route change ── */
 function ScrollReset() {
@@ -46,6 +47,7 @@ function Layout() {
       <div className="ambient" />
       <div className="progress-bar" ref={progRef} />
       <WhatsAppButton />
+      <Chatbot />
       <Navbar solid={navSolid} />
 
       <Routes>
