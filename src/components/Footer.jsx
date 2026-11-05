@@ -44,13 +44,20 @@ const styles = `
 .foot-soc-btn:hover { border-color: #00c8ff; color: #00c8ff; background: rgba(0,200,255,.07); }
 
 .foot-col-title {
-  font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
-  color: rgba(255,255,255,.35); margin-bottom: 16px;
+      font-size: 15px;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: rgb(0 200 255);
+    margin-bottom: 16px;
 }
 .foot-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
 .foot-links a {
-  font-size: 13px; font-weight: 300; color: rgba(255,255,255,.5);
-  text-decoration: none; transition: color .2s;
+      font-size: 13px;
+    font-weight: 300;
+    color: rgb(251 243 243 / 68%);
+    text-decoration: none;
+    transition: color .2s;
 }
 .foot-links a:hover { color: #00c8ff; }
 

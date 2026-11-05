@@ -68,7 +68,7 @@ const styles = `
 
 /* ── CTA BUTTON ── */
 .nav-cta {
-  font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
   color: #000; background: #00c8ff; border: none;
   padding: 9px 22px; border-radius: 100px; cursor: pointer;
   box-shadow: 0 0 20px rgba(0,200,255,.25);
