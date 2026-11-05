@@ -1,11 +1,14 @@
 // ─────────────────────────────────────────────────────
 //  ContactPage.jsx — Full Contact Page
-//  Form delivery (two independent channels, no duplicates):
-//   1) Netlify Forms  – posts to your own domain (no CORS, no 3rd party).
-//                       Emails come from Netlify → set up in Netlify dashboard.
-//   2) FormSubmit.co  – automatic backup if (1) fails (also used on localhost)
-//   3) WhatsApp link  – shown to the visitor if both fail
-//  REQUIRES the hidden <form name="contact"> in public/index.html (see notes).
+//
+//  Enquiries are emailed to webdishaa@gmail.com via Web3Forms
+//  (free, works on any host + localhost, no activation, no backend).
+//
+//  ONE-TIME SETUP (1 minute):
+//   1. Go to https://web3forms.com  → enter webdishaa@gmail.com → "Create Access Key"
+//   2. Open that email, copy the Access Key
+//   3. Paste it into WEB3FORMS_KEY below, save, redeploy.
+//  If sending ever fails, the visitor gets a WhatsApp link with their details.
 // ─────────────────────────────────────────────────────
 
 import { useState } from 'react';
@@ -17,12 +20,13 @@ import {
 
 import { WA_NUMBER } from '../utils/whatsapp';
 
-// Where enquiries are delivered
-const CONTACT_EMAIL = 'webdishaa@gmail.com';
-const FORM_ENDPOINT = `https://formsubmit.co/ajax/${CONTACT_EMAIL}`; // backup channel
-const NETLIFY_FORM  = 'contact';                                     // must match public/index.html
+// Paste your Web3Forms Access Key here (it is safe to be public — it can only
+// send mail TO webdishaa@gmail.com, nothing else).
+const WEB3FORMS_KEY = '7e212134-245d-440b-ae13-1526d39c3c59';
+const WEB3FORMS_URL = 'https://api.web3forms.com/submit';
+const KEY_READY     = WEB3FORMS_KEY && !WEB3FORMS_KEY.startsWith('PASTE_');
 
-// fetch that gives up instead of hanging for 20s when a service is down
+// fetch that gives up after `ms` instead of hanging
 const fetchWithTimeout = async (url, options, ms) => {
   const ctrl  = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), ms);
@@ -228,71 +232,39 @@ export default function ContactPage() {
     if (!validate()) return;
     setStatus('loading');
 
-    const name = form.name.trim();
-    const fields = {
+    const name   = form.name.trim();
+    const email  = form.email.trim();
+    const payload = {
+      access_key: WEB3FORMS_KEY,
+      subject:    `New enquiry from ${name} — WebDishaa website`,
+      from_name:  'WebDishaa Website',
       name,
-      phone:    form.phone.trim(),
-      email:    form.email.trim(),
-      business: form.business.trim(),
-      services: chips.join(', '),
-      budget:   form.budget,
-      message:  form.message.trim(),
-    };
-
-    // ── Channel 1: Netlify Forms (same domain) ──
-    const viaNetlify = async () => {
-      const body = new URLSearchParams({
-        'form-name': NETLIFY_FORM,
-        subject: `New enquiry from ${name} — WebDishaa website`,
-        'bot-field': '',
-        ...fields,
-      }).toString();
-      const res = await fetchWithTimeout('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body,
-      }, 8000);
-      if (!res.ok) throw new Error(`Netlify Forms responded ${res.status}`);
-    };
-
-    // ── Channel 2: FormSubmit (backup) ──
-    const viaFormSubmit = async () => {
-      const res = await fetchWithTimeout(FORM_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          Name: name,
-          Phone: fields.phone,
-          Email: fields.email || 'Not provided',
-          Business: fields.business || 'Not provided',
-          Services: fields.services || 'Not selected',
-          Budget: fields.budget || 'Not selected',
-          Message: fields.message,
-          email: fields.email || undefined,           // Reply-To
-          _subject: `New enquiry from ${name} — WebDishaa website`,
-          _template: 'table',
-          _captcha: 'false',
-          _honey: '',
-        }),
-      }, 10000);
-      const data = await res.json().catch(() => ({}));
-      if (!(res.ok && (data.success === true || data.success === 'true'))) {
-        throw new Error(`FormSubmit said: ${JSON.stringify(data)}`);
-      }
+      phone:      form.phone.trim(),
+      business:   form.business.trim() || 'Not provided',
+      services:   chips.join(', ') || 'Not selected',
+      budget:     form.budget || 'Not selected',
+      message:    form.message.trim(),
+      ...(email ? { email } : {}),   // becomes Reply-To when provided
     };
 
     try {
-      await viaNetlify();
-      setStatus('success');
-    } catch (err1) {
-      console.warn('Netlify Forms failed, trying backup:', err1.message);
-      try {
-        await viaFormSubmit();
+      if (!KEY_READY) throw new Error('Web3Forms access key is not set in ContactPage.jsx (WEB3FORMS_KEY)');
+
+      const res  = await fetchWithTimeout(WEB3FORMS_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payload),
+      }, 12000);
+      const data = await res.json().catch(() => ({}));
+
+      if (res.ok && (data.success === true || data.success === 'true')) {
         setStatus('success');
-      } catch (err2) {
-        console.warn('Backup failed too:', err2.message);
-        setStatus('error');
+      } else {
+        throw new Error(`Web3Forms said: ${data.message || res.status}`);
       }
+    } catch (err) {
+      console.error('Enquiry could not be emailed:', err.message);
+      setStatus('error');
     }
   };
 
