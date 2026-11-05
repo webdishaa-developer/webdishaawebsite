@@ -310,13 +310,13 @@ export default function ContactPage() {
               >
                 <div className="wa-icon-big"><FaWhatsapp /></div>
                 <div>
-                  <div className="wa-cta-t">Chat on WhatsApp</div>
+                  <div className="wa-cta-t">Chat on WhatsApp</div>  
                   <div className="wa-cta-s">Fastest way to reach us — reply in minutes</div>
                 </div>
               </a>
 
               {/* Contact details */}
-              <div className="info-card">
+              <div className="info-card"> 
                 <div className="info-title">Contact Details</div>
                 <a className="info-link" href={SITE.phoneHref}>
                   <div className="info-icon"><FaPhone /></div>

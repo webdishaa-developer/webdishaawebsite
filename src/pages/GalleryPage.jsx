@@ -320,7 +320,7 @@ export default function GalleryPage() {
                     <div className="gl-cta-ic"><FaInstagram /></div>
                     <h4>Want content <em>like this?</em></h4>
                     <p>Monthly reels and posts, designed around your brand — so your page never goes quiet.</p>
-                    <Link className="btn-cyan" to="/services">View Social Packs →</Link>
+                    <Link className="btn-cyan" to="/services">View Our Packs →</Link>
                   </div>
                 )}
               </div>

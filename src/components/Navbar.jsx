@@ -53,8 +53,8 @@ const styles = `
   display: flex; list-style: none; gap: 6px; align-items: center;
 }
 .nav-links a {
-  font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
-  color: #6a7d94; text-decoration: none;
+  font-size: 14px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+  color: #dbdfe4; text-decoration: none;
   padding: 6px 14px; border-radius: 100px;
   transition: color .2s, background .2s;
   position: relative;
