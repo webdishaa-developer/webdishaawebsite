@@ -354,29 +354,13 @@ export default function ContactPage() {
                 {[
                   { day: 'Monday – Friday', time: '9:00 AM – 8:00 PM', active: true },
                   { day: 'Saturday',        time: '10:00 AM – 6:00 PM', active: true },
-                  { day: 'Sunday',          time: 'WhatsApp Only', active: false },
+                  { day: 'Sunday',          time: '9:00 AM – 9:00 PM', active: false },
                 ].map((h) => (
                   <div className="hours-row" key={h.day}>
                     <span className="hours-day">{h.day}</span>
                     <span className={`hours-time${h.active ? ' green' : ''}`}>{h.time}</span>
                   </div>
                 ))}
-              </div>
-
-              {/* Map */}
-              <div className="map-wrap">
-                {/* Replace src with your Google Maps embed URL */}
-                {/* Go to maps.google.com → share → embed → copy src */}
-                <div className="map-placeholder">
-                  📍 Paste your Google Maps embed URL in ContactPage.jsx
-                  <br /><br />
-                  <small>maps.google.com → Share → Embed a map → Copy the iframe src</small>
-                </div>
-                {/* <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!..."
-                  allowFullScreen loading="lazy"
-                  title="WebDishaa Location"
-                /> */}
               </div>
 
             </div>
