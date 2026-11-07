@@ -23,6 +23,7 @@ import ServicesPage from './pages/ServicesPage';
 import GalleryPage from './pages/GalleryPage';
 import ContactPage from './pages/ContactPage';
 import Chatbot from './components/Chatbot';
+import { Analytics } from '@vercel/analytics/react';
 
 /* ── Scroll to top on every route change ── */
 function ScrollReset() {
@@ -59,6 +60,7 @@ function Layout() {
       </Routes>
 
       <Footer />
+         <Analytics />
     </div>
   );
 }
