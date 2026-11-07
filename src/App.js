@@ -24,6 +24,7 @@ import GalleryPage from './pages/GalleryPage';
 import ContactPage from './pages/ContactPage';
 import Chatbot from './components/Chatbot';
 import { Analytics } from '@vercel/analytics/react';
+import CustomCursor from './components/CustomCursor';
 
 /* ── Scroll to top on every route change ── */
 function ScrollReset() {
@@ -49,6 +50,7 @@ function Layout() {
       <div className="progress-bar" ref={progRef} />
       <WhatsAppButton />
       <Chatbot />
+      <CustomCursor />
       <Navbar solid={navSolid} />
 
       <Routes>
